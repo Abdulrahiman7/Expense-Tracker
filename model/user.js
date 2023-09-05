@@ -6,12 +6,13 @@ const user=sequelize.define('user',{
     {
         type: Sequelize.STRING,
         allowNull: false,
-        primaryKey: true
+        
     },
     email:
     {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        primaryKey: true
     },
     password:
     {

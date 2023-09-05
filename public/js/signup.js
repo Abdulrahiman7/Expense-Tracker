@@ -23,6 +23,15 @@ async function createUser(e)
         document.getElementById('email').value='';
         document.getElementById('password').value='';
     }
+    if(user.status === 208)
+    {
+      
+        alert('email already exists');
+    }
+    if(user.status === 204)
+    {
+        alert('Please fill all fields')
+    }
     }
     catch(err){
         console.log(err)
