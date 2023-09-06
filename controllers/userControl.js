@@ -45,17 +45,20 @@ exports.loginUser=async (req,res, next)=> {
                 res.status(404).json(null);
             }else{
                 const foundUser = user[0].get({ plain: true });
-                if(foundUser.password === req.body.password)
-                {
-                    res.status(200).json(user[0])
-                }else{
-                    res.status(403).json(null);
-                }
+                bcrypt.compare(foundUser.password, req.body.password, (err, hash) => {
+                    if(!err)
+                    {
+                        res.status(200).json(user[0])
+                    }else{
+                        throw new Error()
+                    }
+                })
             }
         }
     }
     catch(err)
     {
+        res.status(403).json({message: 'password incorrect'});
         console.log(err);
     }
 }

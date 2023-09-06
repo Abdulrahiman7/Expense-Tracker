@@ -7,22 +7,30 @@
     <link rel="stylesheet" href="../public/css/signup.css">
 </head>
 <body>
-    <header></header>
+    <header>
+    </header>
     <div class="form">
         <form id="form">
-            <h3>Full Name</h3>
-            <input type="text" id="name">
+
+            <div class="input">
+                <h3>Name</h3>
+                <input type="text" id="name">  
             <h3>Email</h3>
             <input type="text" id="email">
             <h3>Password</h3>
             <input type="text" id="password">
-            <button type="submit">Create Account</button>
+            <button type="submit">Sign up</button>
+        </div>
         </form>
-        <P>existing user user</P>
+        <div class="signup">
+            <P>existing user</P>
         <a href="../views/login.html">
-            <button>Login</button>
+            <button>login</button>
         </a>
+        </div>
     </div>
+    <br>
+        
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="../public/js/signup.js"></script>
 </body>

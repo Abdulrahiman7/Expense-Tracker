@@ -15,7 +15,7 @@ async function loginUser(e)
     const user=await axios.post('http://localhost:4000/login',newUser);
     if(user.status===200)
     {
-        alert('successfully logged in')
+        
         document.getElementById('email').value='';
         document.getElementById('password').value='';
     }

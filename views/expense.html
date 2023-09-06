@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sign up</title>
+    <link rel="stylesheet" href="../public/css/expense.css">
+</head>
+<body>
+    <header>
+    </header>
+    <div class="form">
+        <form id="form">
+            <div class="input">
+            <h3>Amount</h3>
+            <input type="number" id="amount">
+            <h3>Description</h3>
+            <input type="text" id="description">
+            <h3>Category</h3>
+            <select id="Category">
+                <option value="food">Food</option>
+                <option value="fuel">Fuel</option>
+                <option value="grocery">Grocery</option>
+                <option value="travel">Travel</option>
+                <option value="hotel">Hotel</option>
+                <option value="party">Party</option>
+                <option value="shopping">Shopping</option>
+                <option value="other">other</option>
+            </select>
+            <button type="submit">Add Expense</button>
+        </div>
+        </form>
+    </div>
+    <div id="expense-list"></div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../public/js/expense.js"></script>
+</body>
+</html>
