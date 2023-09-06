@@ -7,4 +7,6 @@ router.use(cors());
 
 router.post('/signup',Usercontrol.createUser);
 
+router.post('/login',Usercontrol.loginUser);
+
 module.exports= router;
