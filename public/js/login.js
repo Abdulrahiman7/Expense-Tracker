@@ -15,7 +15,8 @@ async function loginUser(e)
     const user=await axios.post('http://localhost:4000/login',newUser);
     if(user.status===200)
     {
-        
+        localStorage.setItem('token', user.data.token)
+        window.location.href='../views/expense.html';
         document.getElementById('email').value='';
         document.getElementById('password').value='';
     }

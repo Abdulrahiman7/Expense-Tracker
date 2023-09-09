@@ -6,7 +6,6 @@ const cors=require('cors');
 const userroute=require('./routers/userRoute');
 const expenseroute=require('./routers/expenseRoute')
 
-const sequelize=require('./model/user');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -19,17 +18,16 @@ const Expense=require('./model/expenseModel');
 Expense.belongsTo(User, {constraints: true, onDelete: 'CASCADE'});
 User.hasMany(Expense)
 
-sequelize.sync({})
+User.sync()
 .then(()=>{
     return User.findAll();
 })
 .then((users)=>{
-    console.log(users);
-    if(users.length>0)
-    {
-        return Expense.create();
-    }
-    return users;
+    // if(users.length>0)
+    // {
+    return Expense.sync();
+    // }
+    // return users;
 })
 .then(()=>{
     app.listen(4000);

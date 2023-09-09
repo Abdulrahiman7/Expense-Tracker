@@ -1,4 +1,8 @@
 const form=document.getElementById('form');
+const to=localStorage.getItem('token')
+    const headers={
+        'Authorization':to
+    }
 
 form.addEventListener('submit', createExpense);
 
@@ -14,8 +18,9 @@ async function createExpense(e)
         'category':cat
     }
     try{
-        console.log('ent')
-    const user=await axios.post('http://localhost:4000/expense',newExpense);
+        
+       
+    const user=await axios.post('http://localhost:4000/expense',newExpense,{headers});
     if(user.status===200)
     {
         console.log('good');
@@ -36,22 +41,40 @@ function display(id, amt, des, cat)
     const li=document.createElement('li');
     li.setAttribute('id',id);
     const text=document.createTextNode('amount='+amt+', description='+des+', category:'+cat);
-    const del=document.createElement('delete');
+    const del=document.createElement('button');
     del.textContent= 'delete';
     li.appendChild(text);
     li.appendChild(del);
     ul.appendChild(li);
 
+    del.addEventListener('click',deleteExpense);
 }
 
-
+async function deleteExpense(e)
+{
+    e.preventDefault();
+    const id=this.parentElement.id;
+  
+    try{
+        const x=await axios.delete(`http://localhost:4000/expense/${id}`,{headers})
+        if(x.status===200)
+        {
+            console.log('deleted')
+        }
+    }
+    catch(err){
+        console.log(err);
+    }
+}
 
 document.addEventListener('DOMContentLoaded',getExpense);
 
 async function getExpense()
 {
+    
+
     try{
-        const x=await axios.get('http://localhost:4000/expense');
+        const x=await axios.get('http://localhost:4000/expense',{headers});
         if(x.status=== 200)
         {
             for(let i=0;i<x.data.length;i++)
