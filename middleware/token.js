@@ -1,4 +1,5 @@
 const jwt=require('jsonwebtoken');
+const User=require('../model/user')
 
 exports.authorize= async (req,res,next) =>{
     const key='secretkey';
@@ -6,9 +7,15 @@ exports.authorize= async (req,res,next) =>{
     console.log(token);
     try{
         const auth=jwt.verify(token, key);
-        console.log(auth.userId)
-        req.email=auth.userId;
-        next()
+        User.findByPk(auth.userId)
+        .then((user)=>{
+            console.log('entered')
+            req.user=user;
+             next()
+        })
+        .catch(()=>{
+            throw new Error();
+        })
     }
     catch(err){
         console.log(err);

@@ -18,6 +18,10 @@ const user=sequelize.define('user',{
     {
         type: Sequelize.STRING,
         allowNull: false
+    },
+    premiumUser: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
     }
 });
 

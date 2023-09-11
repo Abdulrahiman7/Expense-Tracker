@@ -1,3 +1,6 @@
+
+
+
 const form=document.getElementById('form');
 const to=localStorage.getItem('token')
     const headers={
@@ -67,12 +70,40 @@ async function deleteExpense(e)
     }
 }
 
+document.getElementById('buy').onclick= async function(e){
+    e.preventDefault();
+    try{
+        const x=await axios.get('http://localhost:4000/order/buypremium',{headers})
+        console.log(x.Razorpay);
+        var options={
+            'key': x.data.key_id,
+            'order_id':x.data.order_id,
+            'handler': 
+            async function(x){
+                await axios.post('http://localhost:4000/order/buystatus',{
+                    order_id:options.order_id,
+                    payment_id:x.razorpay_payment_id,
+                }, {headers:headers})
+                alert('you are now a premium number');
+            }
+            }
+            const rzp1=new Razorpay(options);
+            rzp1.open();
+            e.preventDefault();
+
+            rzp1.on('payment.failed', function(er){
+                alert('something went wrong with payment');
+            })
+    }
+    catch(err){
+        console.log('something fishy');
+    }
+}
+
 document.addEventListener('DOMContentLoaded',getExpense);
 
 async function getExpense()
 {
-    
-
     try{
         const x=await axios.get('http://localhost:4000/expense',{headers});
         if(x.status=== 200)

@@ -4,8 +4,7 @@ exports.postExpense=async (req, res, next)=> {
     try
     {
         const exp=req.body;
-        exp.userEmail=req.email;
-        const x=await Expense.create(exp);
+        const x=await req.user.createExpense(exp);
         res.status(200).json(x[0]);
     }
     catch(err)
@@ -16,7 +15,7 @@ exports.postExpense=async (req, res, next)=> {
 
 exports.getExpense=async (req, res, next)=>{
     try{
-        const x=await Expense.findAll({where:{userEmail:req.email}})
+        const x=await Expense.findAll({where:{email:req.user.email}})
         res.status(200).json(x);
     }
     catch(err)
