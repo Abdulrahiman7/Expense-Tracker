@@ -16,7 +16,8 @@ exports.postExpense=async (req, res, next)=> {
 exports.getExpense=async (req, res, next)=>{
     try{
         const x=await Expense.findAll({where:{email:req.user.email}})
-        res.status(200).json(x);
+    
+        res.status(200).json({exp:x, prime:req.user.premiumUser});
     }
     catch(err)
     {
