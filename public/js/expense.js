@@ -1,6 +1,7 @@
 
 
 
+
 const form=document.getElementById('form');
 const to=localStorage.getItem('token')
     const headers={
@@ -94,23 +95,86 @@ document.getElementById('buy').onclick= async function(e){
             rzp1.on('payment.failed', function(er){
                 alert('something went wrong with payment');
             })
+            location.reload();
     }
     catch(err){
         console.log('something fishy');
     }
 }
+let leaderboardVisible=false;
+
+async function showLeaderboard(e)
+{
+    e.preventDefault();
+    const ul=document.createElement('ul');
+    const premiumSpace=document.getElementById('leaderboard-list');
+    if(leaderboardVisible==true)
+    {
+        document.getElementById('leaderboard-list').innerHTML='';
+        
+        leaderboardVisible=false;
+        return;
+    }else{
+    premiumSpace.style.display='block';
+    
+    try{
+        const x=await axios.get('http://localhost:4000/premium/leaderboard',{headers})
+       
+       
+        for(let i=0;i<x.data.arr.length;i++)
+        {
+            const li=document.createElement('li');
+            const text=document.createTextNode(i+1+' =>'+x.data.arr[i].name+' Total Expense: '+x.data.arr[i].total);
+            li.appendChild(text);
+            ul.appendChild(li);
+            
+        }
+        premiumSpace.appendChild(ul);
+        leaderboardVisible=true;
+        
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+}
+
+function isPremiumUser()
+{
+    const premiumSpace=document.getElementById('buydiv');
+        premiumSpace.removeChild(document.getElementById('buy'));
+        const text=document.createTextNode('You are a Premium User');
+        const button=document.createElement('button');
+        button.setAttribute('id','leaderboard');
+        button.textContent='Leaderboard';
+        premiumSpace.appendChild(text);
+        premiumSpace.appendChild(button);
+        button.addEventListener('click',showLeaderboard);
+
+}
+
 
 document.addEventListener('DOMContentLoaded',getExpense);
 
 async function getExpense()
 {
+
     try{
-        const x=await axios.get('http://localhost:4000/expense',{headers});
-        if(x.status=== 200)
+        const y=await axios.get('http://localhost:4000/expense',{headers});
+        if(y.status=== 200)
         {
-            for(let i=0;i<x.data.length;i++)
+            
+            console.log(y.data.prime);
+            const z=y.data.exp;
+            if(y.data.prime===true)
             {
-                display(x.data[i].id, x.data[i].amount, x.data[i].description, x.data[i].category);
+                isPremiumUser();
+            }
+            
+            
+            for(let i=0;i<z.length;i++)
+            {
+                display(z[i].id, z[i].amount, z[i].description, z[i].category);
             }
         }
     }
