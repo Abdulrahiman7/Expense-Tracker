@@ -27,7 +27,7 @@ if (name === '' || email === '' || password === '') {
                 console.error('Error hashing password:', err);
                 res.status(500).json({ message: 'Internal server error' });
             } else {
-                const user = await User.create({ name, email, password: hash, premiumUser: false });
+                const user = await User.create({ name, email, password: hash, premiumUser: false, totalExpense: 0});
                 // Handle bcrypt hashing errores.status(200).json(user);
             }
         });

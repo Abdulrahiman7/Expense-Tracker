@@ -12,29 +12,34 @@ exports.buyPremium= async (req,res,next)=> {
         key_secret: keySecret
     })
     const amt=2400;
+    let failedOrder;
     rzp.orders.create({amount:amt,currency:'INR'}, (err, order)=>{
         if(err)
         {
             console.log(err);
         }
-        
         req.user.createOrder({orderId:order.id, status:'PENDING'})
         .then(()=>{
             return res.status(201).json({order_id: order.id, key_id:rzp.key_id})
         })
-        .catch(err => console.log(err));
+        .catch((err)=>{
+            console.log(err);    
+          });
     })
 }catch(err){
     console.log(err);
+    
 }
 }
 
 exports.orderStatus= async (req,res, next)=>{
     try{
         console.log('entered the status')
-        const {payment_id, order_id}=req.body;
+        if(req.body.status === 'SUCCESS')
+        {
+            const {payment_id, order_id}=req.body;
 
-        await Order.findOne({where:{orderId:order_id}})
+        const x=await Order.findOne({where:{orderId:order_id}})
         .then((order)=>{
             
             return order.update({paymentId: payment_id,  status:'SUCCESS'})
@@ -47,8 +52,13 @@ exports.orderStatus= async (req,res, next)=>{
             return res.status(200).json({success: true});
         })
         .catch(()=>{
-
+            Order.update({status: 'FAILED'},{where:{orderId: order_id}})
         })
+        }else{
+            await Order.update({status: 'FAILED'},{where:{
+                orderId: req.body.order_id
+            }})
+        }  
     }
 catch(err){
     console.log(err);

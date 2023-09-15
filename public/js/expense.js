@@ -84,6 +84,7 @@ document.getElementById('buy').onclick= async function(e){
                 await axios.post('http://localhost:4000/order/buystatus',{
                     order_id:options.order_id,
                     payment_id:x.razorpay_payment_id,
+                    status: 'SUCCESS'
                 }, {headers:headers})
                 alert('you are now a premium number');
             }
@@ -93,12 +94,17 @@ document.getElementById('buy').onclick= async function(e){
             e.preventDefault();
 
             rzp1.on('payment.failed', function(er){
+                 axios.post('http://localhost:4000/order/buystatus',{
+                    order_id:options.order_id,
+                    payment_id:x.razorpay_payment_id,
+                    status: 'FAILED'
+                }, {headers:headers});
                 alert('something went wrong with payment');
             })
-            location.reload();
+            
     }
     catch(err){
-        console.log('something fishy');
+        console.log(err);
     }
 }
 let leaderboardVisible=false;
@@ -124,7 +130,7 @@ async function showLeaderboard(e)
         for(let i=0;i<x.data.arr.length;i++)
         {
             const li=document.createElement('li');
-            const text=document.createTextNode(i+1+' =>'+x.data.arr[i].name+' Total Expense: '+x.data.arr[i].total);
+            const text=document.createTextNode(i+1+' =>'+x.data.arr[i].name+' Total Expense: '+x.data.arr[i].totalExpense);
             li.appendChild(text);
             ul.appendChild(li);
             
