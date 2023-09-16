@@ -60,3 +60,7 @@ button:hover{
     background-color: aquamarine;
     border: none;
 }
+#forgotButton{
+    height: 18px;
+    margin-left: 30px;
+}

@@ -1,7 +1,9 @@
 const User= require('../model/user');
 const bcrypt = require('bcrypt');
 const jwt=require('jsonwebtoken');
-const { resolve } = require('path');
+const Sib=require('sib-api-v3-sdk');
+
+
 
  function generateToken(id)
 {
@@ -65,4 +67,33 @@ exports.loginUser=async (req,res, next)=> {
         res.status(403).json({message: 'password incorrect'});
         console.log(err);
     }
+}
+
+exports.forgotUser= async (req,res,next)=>{
+    const email=req.body.email;
+    const client=Sib.ApiClient.instance;
+const apiKey=client.authentications['api-key'];
+apiKey.apiKey=process.env.BREVO_API_KEY;
+try
+{
+const tranEmailApi=new Sib.TransactionalEmailsApi();
+const sender={
+    email:'abd27u@gmail.com'
+}
+const reciever=[
+    {
+        email:'abdulandrahiman@gmail.com'
+    }
+];
+
+await tranEmailApi.sendTransacEmail({
+    sender,
+    to:reciever,
+    subject: 'Subscribe to me for contents on node js',
+    textContent:'Become a developer now'
+})
+}
+catch(err){
+    console.log(err);
+}
 }
