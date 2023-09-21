@@ -145,6 +145,12 @@ async function showLeaderboard(e)
 }
 }
 
+function reportPage(e)
+{
+    e.preventDefault();
+    window.location.href='http://127.0.0.1:5500/views/expensePage.html';
+}
+
 function isPremiumUser()
 {
     const premiumSpace=document.getElementById('buydiv');
@@ -156,6 +162,11 @@ function isPremiumUser()
         premiumSpace.appendChild(text);
         premiumSpace.appendChild(button);
         button.addEventListener('click',showLeaderboard);
+
+        const dayToday=document.createElement('button');
+        dayToday.textContent= 'Daily Expense Report';
+        premiumSpace.appendChild(dayToday);
+        dayToday.addEventListener('click',reportPage);
 
 }
 
