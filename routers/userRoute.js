@@ -9,4 +9,9 @@ router.post('/signup',Usercontrol.createUser);
 
 router.post('/login',Usercontrol.loginUser);
 
+router.post('/forgotpassword',Usercontrol.forgotUser);
+
+router.get('/forgotpassword/:id',Usercontrol.postForgotUser);
+
+router.post('/changepassword',Usercontrol.changePassword);
 module.exports= router;

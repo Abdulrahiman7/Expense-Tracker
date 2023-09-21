@@ -18,11 +18,16 @@ app.use(orderroute);
 const User=require('./model/user');
 const Expense=require('./model/expenseModel');
 const Order=require('./model/order');
+const Uuid=require('./model/forgotPassword');
 
 Expense.belongsTo(User, {constraints: true, onDelete: 'CASCADE', foreignKey: 'email'});
 User.hasMany(Expense,{foreignKey: 'email'});
 User.hasMany(Order,{foreignKey: 'email'});
 Order.belongsTo(User,{foreignKey: 'email'});
+Uuid.belongsTo(User, {foreignKey: 'email'});
+User.hasOne(Uuid, {foreignKey: 'email'});
+
+
 
 sequelize.sync()
 .then(()=>{

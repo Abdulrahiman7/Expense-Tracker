@@ -1,17 +1,32 @@
-const form=document.getElementById('form');
 
-form.addEventListener('submit',resetPassword);
+    const forma=document.getElementById('resetEmail');
 
-async function resetPassword(e)
-{
-    e.preventDefault();
-    try
+    forma.addEventListener('submit',resetPassword);
+    
+    async function resetPassword(e)
     {
-        const email=document.getElementById('email').value;
-        const x=axios.post('http://localhost:4000/forgotpassword',{email})
+        e.preventDefault();
+        try
+        {
+            const email=document.getElementById('email').value;
+            console.log(email);
+            const x=await axios.post('http://localhost:4000/forgotpassword',{email})
+            if(x.status === 200)
+            { 
+                alert('Reset link Has been sent to your registered Email');
+            }else
+            {
+                alert('Email Not registered');
+            }
+    
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+    
+    
+  
 
-    }
-    catch(err){
-        console.log(err);
-    }
-}
+
+
