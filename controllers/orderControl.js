@@ -12,7 +12,6 @@ exports.buyPremium= async (req,res,next)=> {
         key_secret: keySecret
     })
     const amt=2400;
-    let failedOrder;
     rzp.orders.create({amount:amt,currency:'INR'}, (err, order)=>{
         if(err)
         {
