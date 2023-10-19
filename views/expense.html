@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sign up</title>
-    <!-- <link rel="stylesheet" href="../public/css/expense.css"> -->
+    <link rel="stylesheet" href="../public/css/expense.css">
 </head>
 <body>
     <header>
@@ -36,7 +36,20 @@
         
     </div>
     <div id="leaderboard-list"></div>
-    <div id="expense-list"></div>
+    <div id="expense-block">
+        <div>
+            <h5>Page Limit</h5>
+            <select id="page-Limit">
+                <option value="2" selected>2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div id="expense-list"></div>
+        <div id="page-list"></div>
+    </div>
+    
     
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

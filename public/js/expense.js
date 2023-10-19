@@ -42,6 +42,7 @@ const ul=document.createElement('ul');
 
 function display(id, amt, des, cat)
 {
+    
     const li=document.createElement('li');
     li.setAttribute('id',id);
     const text=document.createTextNode('amount='+amt+', description='+des+', category:'+cat);
@@ -154,7 +155,12 @@ function reportPage(e)
 function isPremiumUser()
 {
     const premiumSpace=document.getElementById('buydiv');
-        premiumSpace.removeChild(document.getElementById('buy'));
+    premiumSpace.innerHTML='';
+    const buyDiv=document.getElementById('buy');
+    if(buyDiv)
+    {
+        premiumSpace.removeChild(buyDiv);
+    }
         const text=document.createTextNode('You are a Premium User');
         const button=document.createElement('button');
         button.setAttribute('id','leaderboard');
@@ -169,15 +175,48 @@ function isPremiumUser()
         dayToday.addEventListener('click',reportPage);
 
 }
+const pageList=document.getElementById('page-list');
+const pageLimit=document.getElementById('page-Limit');
 
+pageLimit.addEventListener('change',setPageLimit);
 
-document.addEventListener('DOMContentLoaded',getExpense);
-
-async function getExpense()
+function setPageLimit(e)
 {
+    e.preventDefault();
+    const limitValue=pageLimit.value;
+    getExpense(1, +limitValue);
+}
 
+function gotoPage(e)
+{
+    console.log('goto page entered');
+    e.preventDefault();
+    const page=this.textContent;
+    const limit=document.getElementById('page-Limit').value;
+    getExpense(+page, +limit);
+}
+
+async function pageButtons(length)
+{
+    pageList.innerHTML='';
+    for(let i=0;i<length;i++)
+    {
+        const pageNo=document.createElement('button');
+        pageNo.textContent=`${i+1}`;
+        pageNo.setAttribute('id',`${i+1}`);
+        pageList.appendChild(pageNo);
+        pageNo.addEventListener('click',gotoPage)
+    }
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+    getExpense(1,2);
+});
+
+async function getExpense(page,pageLength)
+{
     try{
-        const y=await axios.get('http://localhost:4000/expense',{headers});
+        const y=await axios.get(`http://localhost:4000/expense?page=${page}&pageLimit=${pageLength}`,{headers});
         if(y.status=== 200)
         {
             
@@ -188,11 +227,12 @@ async function getExpense()
                 isPremiumUser();
             }
             
-            
+            ul.innerHTML='';
             for(let i=0;i<z.length;i++)
             {
                 display(z[i].id, z[i].amount, z[i].description, z[i].category);
             }
+            pageButtons(y.data.totalPages);
         }
     }
     catch(err){

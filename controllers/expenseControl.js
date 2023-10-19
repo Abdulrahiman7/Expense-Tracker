@@ -1,4 +1,5 @@
 
+
 const Expense=require('../model/expenseModel');
 const sequelize=require('../util/database');
 
@@ -27,15 +28,23 @@ exports.postExpense=async (req, res, next)=> {
 
 exports.getExpense=async (req, res, next)=>{
     try{
-        const x=await Expense.findAll({where:{email:req.user.email}})
-    
-        res.status(200).json({exp:x, prime:req.user.premiumUser});
+        const limitPage=req.query.pageLimit;
+        const page=req.query.page;
+        const x=await Expense.findAndCountAll(
+            {
+                offset: (page-1)*limitPage,
+                limit: +limitPage
+            },{where:{email:req.user.email}}
+            )
+        const totalPages=Math.ceil((x.count)/limitPage);
+        res.status(200).json({exp:x.rows,prime:true,totalPages});
     }
     catch(err)
     {
         console.log(err);
     }
 }
+
 
 exports.deleteExpense= async (req,res,next) =>{
     const t=seq.transaction();
@@ -58,3 +67,4 @@ exports.deleteExpense= async (req,res,next) =>{
         console.log(err);
     }
 }
+
