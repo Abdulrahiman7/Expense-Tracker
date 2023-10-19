@@ -176,15 +176,16 @@ function isPremiumUser()
 
 }
 const pageList=document.getElementById('page-list');
-const pageLimit=document.getElementById('page-Limit');
+const page_Limit=document.getElementById('page-Limit');
 
-pageLimit.addEventListener('change',setPageLimit);
+page_Limit.addEventListener('change',setPageLimit);
 
 function setPageLimit(e)
 {
     e.preventDefault();
-    const limitValue=pageLimit.value;
-    getExpense(1, +limitValue);
+    const limitValue=page_Limit.value;
+    localStorage.setItem('expenseLimit',limitValue);
+    getExpense(1);
 }
 
 function gotoPage(e)
@@ -192,8 +193,7 @@ function gotoPage(e)
     console.log('goto page entered');
     e.preventDefault();
     const page=this.textContent;
-    const limit=document.getElementById('page-Limit').value;
-    getExpense(+page, +limit);
+    getExpense(+page);
 }
 
 async function pageButtons(length)
@@ -210,13 +210,15 @@ async function pageButtons(length)
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
-    getExpense(1,2);
+    getExpense(1);
 });
 
-async function getExpense(page,pageLength)
+async function getExpense(page)
 {
     try{
-        const y=await axios.get(`http://localhost:4000/expense?page=${page}&pageLimit=${pageLength}`,{headers});
+        const pageLimit=localStorage.getItem('expenseLimit')||2;
+        page_Limit.value=pageLimit;
+        const y=await axios.get(`http://localhost:4000/expense?page=${page}&pageLimit=${pageLimit}`,{headers});
         if(y.status=== 200)
         {
             
