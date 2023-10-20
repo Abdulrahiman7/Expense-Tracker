@@ -1,4 +1,7 @@
 const express=require('express');
+const fs=require('fs');
+const path=require('path');
+
 const app= express();
 require('dotenv').config();
 const bodyParser=require('body-parser');
@@ -7,8 +10,14 @@ const userroute=require('./routers/userRoute');
 const expenseroute=require('./routers/expenseRoute')
 const orderroute=require('./routers/orderRoute');
 const sequelize=require('./util/database')
+const helmet=require('helmet');
+const morgan=require('morgan');
+const LogStream=fs.createWriteStream(path.join(__dirname,'access.log'),{flags:'a'});
+
 app.use(cors());
 app.use(bodyParser.json());
+app.use(helmet());
+app.use(morgan('combined',{stream:LogStream}));
 
 app.use(userroute);
 app.use(expenseroute);
