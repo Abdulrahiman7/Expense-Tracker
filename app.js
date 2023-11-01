@@ -16,13 +16,16 @@ const LogStream=fs.createWriteStream(path.join(__dirname,'access.log'),{flags:'a
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(helmet());
-app.use(morgan('combined',{stream:LogStream}));
+// app.use(helmet());
+// app.use(morgan('combined',{stream:LogStream}));
 
 app.use(userroute);
 app.use(expenseroute);
 app.use(orderroute);
-
+app.use((req,res)=>{
+    console.log(req.url);
+    res.sendFile(path.join(__dirname, `views/${req.url}.html`))
+});
 
 const User=require('./model/user');
 const Expense=require('./model/expenseModel');

@@ -106,7 +106,7 @@ const reciever=[
     }
 ];
 console.log(id);
-const resetLink=`http://localhost:4000/forgotpassword/${id}`;
+const resetLink=`http://13.234.19.1/forgotpassword/${id}`;
 console.log(resetLink);
 await tranEmailApi.sendTransacEmail({
     sender,
@@ -143,7 +143,7 @@ try{
 
         const y=await forgotPasswordRequests.update({active:false}, {where:{email:x.email}})
         const token=generateToken(x.email);
-        res.status(200).redirect(`http://127.0.0.1:5500/views/resetPassword.html?token=${token}`);
+        res.status(200).redirect(`http://13.234.19.1/resetPassword.html?token=${token}`);
     }
     }
 }
