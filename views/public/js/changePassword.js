@@ -10,11 +10,11 @@ async function changePassword(e)
     const token=urlParams.get('token');
     console.log(token);
     const password=document.getElementById('password').value;
-    const x=await axios.post(`http://localhost:4000/changepassword?token=${token}`,{password:password})
+    const x=await axios.post(`http://13.233.35.252/changepassword?token=${token}`,{password:password})
     if(x.status === 200)
     {
        
-        window.location.href="http://127.0.0.1:5500/views/login.html";
+        window.location.href="../login.html";
         alert('Changed password confirmed. Login to continue');
     }
 }

@@ -12,11 +12,11 @@ async function loginUser(e)
         'password':password
     }
     try{
-    const user=await axios.post('http://localhost:4000/login',newUser);
+    const user=await axios.post('http://13.233.35.252/login',newUser);
     if(user.status===200)
     {
         localStorage.setItem('token', user.data.token)
-        window.location.href='../views/expense.html';
+        window.location.href='../expense.html';
         document.getElementById('email').value='';
         document.getElementById('password').value='';
     }

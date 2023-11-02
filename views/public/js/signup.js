@@ -15,7 +15,7 @@ async function createUser(e)
     }
     try{
         console.log('ent')
-    const user=await axios.post('http://localhost:4000/signup',newUser);
+    const user=await axios.post('http://13.233.35.252/signup',newUser);
     if(user.status===200)
     {
         console.log('good');

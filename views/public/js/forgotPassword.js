@@ -10,7 +10,7 @@
         {
             const email=document.getElementById('email').value;
             console.log(email);
-            const x=await axios.post('http://localhost:4000/forgotpassword',{email})
+            const x=await axios.post('http://13.233.35.252/forgotpassword',{email})
             if(x.status === 200)
             { 
                 alert('Reset link Has been sent to your registered Email');
