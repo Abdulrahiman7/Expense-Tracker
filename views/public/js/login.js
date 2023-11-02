@@ -12,7 +12,7 @@ async function loginUser(e)
         'password':password
     }
     try{
-    const user=await axios.post('http://13.234.19.1/login',newUser);
+    const user=await axios.post('http://13.233.35.252/login',newUser);
     if(user.status===200)
     {
         localStorage.setItem('token', user.data.token)

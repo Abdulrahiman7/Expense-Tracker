@@ -7,7 +7,7 @@ async function expenseDownload(e)
 {
     e.preventDefault();
     try{
-        const x=await axios.get('http://13.234.19.1/premium/download',{headers})
+        const x=await axios.get('http://13.233.35.252/premium/download',{headers})
         console.log(x);
         if(x.status===200)
         {
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded',getContent);
 async function getContent()
 {
     try{
-        const x=await axios.get('http://13.234.19.1/premium/expenseReport',{headers});
+        const x=await axios.get('http://13.233.35.252/premium/expenseReport',{headers});
         if(x.status===200)
         {
             const downloads=x.data.arr;

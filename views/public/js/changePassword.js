@@ -10,7 +10,7 @@ async function changePassword(e)
     const token=urlParams.get('token');
     console.log(token);
     const password=document.getElementById('password').value;
-    const x=await axios.post(`http://13.234.19.1/changepassword?token=${token}`,{password:password})
+    const x=await axios.post(`http://13.233.35.252/changepassword?token=${token}`,{password:password})
     if(x.status === 200)
     {
        

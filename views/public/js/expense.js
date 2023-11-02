@@ -24,7 +24,7 @@ async function createExpense(e)
     try{
         
        
-    const user=await axios.post('http://13.234.19.1/expense',newExpense,{headers});
+    const user=await axios.post('http://13.233.35.252/expense',newExpense,{headers});
     if(user.status===200)
     {
         console.log('good');
@@ -61,7 +61,7 @@ async function deleteExpense(e)
     const id=this.parentElement.id;
   
     try{
-        const x=await axios.delete(`http://13.234.19.1/expense/${id}`,{headers})
+        const x=await axios.delete(`http://13.233.35.252/expense/${id}`,{headers})
         if(x.status===200)
         {
             console.log('deleted')
@@ -75,14 +75,14 @@ async function deleteExpense(e)
 document.getElementById('buy').onclick= async function(e){
     e.preventDefault();
     try{
-        const x=await axios.get('http://13.234.19.1/order/buypremium',{headers})
+        const x=await axios.get('http://13.233.35.252/order/buypremium',{headers})
         console.log(x.Razorpay);
         var options={
             'key': x.data.key_id,
             'order_id':x.data.order_id,
             'handler': 
             async function(x){
-                await axios.post('http://13.234.19.1/order/buystatus',{
+                await axios.post('http://13.233.35.252/order/buystatus',{
                     order_id:options.order_id,
                     payment_id:x.razorpay_payment_id,
                     status: 'SUCCESS'
@@ -95,7 +95,7 @@ document.getElementById('buy').onclick= async function(e){
             e.preventDefault();
 
             rzp1.on('payment.failed', function(er){
-                 axios.post('http://13.234.19.1/order/buystatus',{
+                 axios.post('http://13.233.35.252/order/buystatus',{
                     order_id:options.order_id,
                     payment_id:x.razorpay_payment_id,
                     status: 'FAILED'
@@ -125,7 +125,7 @@ async function showLeaderboard(e)
     premiumSpace.style.display='block';
     
     try{
-        const x=await axios.get('http://13.234.19.1/premium/leaderboard',{headers})
+        const x=await axios.get('http://13.233.35.252/premium/leaderboard',{headers})
        
        
         for(let i=0;i<x.data.arr.length;i++)
@@ -218,7 +218,7 @@ async function getExpense(page)
     try{
         const pageLimit=localStorage.getItem('expenseLimit')||2;
         page_Limit.value=pageLimit;
-        const y=await axios.get(`http://13.234.19.1/expense?page=${page}&pageLimit=${pageLimit}`,{headers});
+        const y=await axios.get(`http://13.233.35.252/expense?page=${page}&pageLimit=${pageLimit}`,{headers});
         if(y.status=== 200)
         {
             
