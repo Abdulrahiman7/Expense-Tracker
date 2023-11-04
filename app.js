@@ -12,7 +12,7 @@ const orderroute=require('./routers/orderRoute');
 const sequelize=require('./util/database')
 const helmet=require('helmet');
 const morgan=require('morgan');
-const LogStream=fs.createWriteStream(path.join(__dirname,'access.log'),{flags:'a'});
+//const LogStream=fs.createWriteStream(path.join(__dirname,'access.log'),{flags:'a'});
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -24,7 +24,7 @@ app.use(expenseroute);
 app.use(orderroute);
 app.use((req,res)=>{
     console.log(req.url);
-    res.sendFile(path.join(__dirname, `views/${req.url}.html`))
+    res.sendFile(path.join(__dirname, `views/${req.url}`))
 });
 
 const User=require('./model/user');

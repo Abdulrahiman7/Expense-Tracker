@@ -2,6 +2,7 @@
 
 const Expense=require('../model/expenseModel');
 const sequelize=require('../util/database');
+const User=require('../model/user');
 
 exports.postExpense=async (req, res, next)=> {
     const t=await sequelize.transaction();
@@ -37,7 +38,13 @@ exports.getExpense=async (req, res, next)=>{
             },{where:{email:req.user.email}}
             )
         const totalPages=Math.ceil((x.count)/limitPage);
-        res.status(200).json({exp:x.rows,prime:true,totalPages});
+        const user=await User.findOne({
+		            attributes: ['premiumUser'],
+		            where: {
+				                  email:req.user.email,
+				                },
+		          });
+	            res.status(200).json({exp:x.rows,prime:user.premiumUser,totalPages});
     }
     catch(err)
     {
