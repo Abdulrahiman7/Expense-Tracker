@@ -24,7 +24,8 @@ app.use(expenseroute);
 app.use(orderroute);
 app.use((req,res)=>{
     console.log(req.url);
-    res.sendFile(path.join(__dirname, `views/${req.url}`))
+    const [url, queryParams] = req.url.split('?');
+    res.sendFile(path.join(__dirname, `views/${url}`))
 });
 
 const User=require('./model/user');
@@ -32,6 +33,7 @@ const Expense=require('./model/expenseModel');
 const Order=require('./model/order');
 const Uuid=require('./model/forgotPassword');
 const downloads=require('./model/downloads');
+const { spliceStr } = require('sequelize/types/utils');
 
 Expense.belongsTo(User, {constraints: true, onDelete: 'CASCADE', foreignKey: 'email'});
 User.hasMany(Expense,{foreignKey: 'email'});
